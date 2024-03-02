@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager : AManager<UIManager>
 {
-    public static bool isGamePaused = true;
-
     void Update()
     {
-        
+        GameManager.instance
     }
 }
