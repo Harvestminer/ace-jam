@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : AManager<GameManager>
 {
-    public static bool isGamePaused = true;
+    public bool isGamePaused = false;
 
     void Start()
     {
@@ -13,6 +13,10 @@ public class GameManager : AManager<GameManager>
 
     void Update()
     {
-        
+        if (Input.GetButtonDown("Cancel"))
+        {
+            isGamePaused = !isGamePaused;
+            Time.timeScale = isGamePaused ? 0 : 1;
+        }
     }
 }
