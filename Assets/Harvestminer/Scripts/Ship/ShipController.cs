@@ -10,6 +10,12 @@ public class ShipController : MonoBehaviour, IInteractable
     public Vector3 offset;
 
     private Camera cam;
+    private Rigidbody ship_rg;
+
+    void OnEnable()
+    {
+        ship_rg = GameManager.instance.ship.GetComponent<Rigidbody>();
+    }
 
     public void Interact()
     {
@@ -28,22 +34,21 @@ public class ShipController : MonoBehaviour, IInteractable
 
     void Update()
     {
+        Transform ship = GameManager.instance.ship;
+        ship.position += ship.forward * shipSpeed * Time.deltaTime;
+
+        if (shipSpeed < 0)
+            shipSpeed = 0;
+
         if (!GameManager.instance.isControlShip)
             return;
 
-        if (Input.GetAxis("Vertical") != 0)
-        {
-            Transform ship = GameManager.instance.ship;
 
-            ship.position += ship.forward * Input.GetAxis("Vertical") * shipSpeed * Time.deltaTime;
-        }
+        if (Input.GetAxis("Vertical") != 0)
+            shipSpeed += Input.GetAxis("Vertical") * Time.deltaTime;
 
         if (Input.GetAxis("Horizontal") != 0)
-        {
-            Transform ship = GameManager.instance.ship;
-
             ship.Rotate(Vector3.up, Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime);
-        }
     }
 
     private void changeControl()
